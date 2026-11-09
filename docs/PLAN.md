@@ -267,7 +267,7 @@ The Photoshop setup:
 
 ## Start content: the welcome screen and 3D examples (the user, 2026-10-24; v0.106)
 
-- **The welcome screen is a project file**, made in asXii: `dist/start/welcome.asxii.json` (for now, the old welcome
+- **The welcome screen is a project file**, made in asXii: `public/start/welcome.asxii.json` (for now, the old welcome
   art as a project). A first visit opens it; **Help › Welcome screen** opens it again any time (like File › New: Ctrl Z
   brings back what was there). The user plans a new one with a 3D block composition: build it, File › Save project,
   copy the file over `welcome.asxii.json`.
@@ -279,10 +279,10 @@ The Photoshop setup:
   autosaving the welcome over your saved work right away; your next edit still saves over it, so Help › Welcome
   screen is the safe way to see the welcome.
 - **3D Examples** (the 3D window, Examples ▾ next to Clear): not a brush, it **replaces all the blocks** with a made
-  design and its block look (Ctrl Z brings yours back). Files in `dist/start/blocks/*.asxii.json` (any saved project:
+  design and its block look (Ctrl Z brings yours back). Files in `public/start/blocks/*.asxii.json` (any saved project:
   its blocks are used), sorted by file name (number prefix), named by the project name. First ones: Edge cube (8 x 8 x
   8, edges 2 thick), Ziggurat, Arch. The user's own composition goes here too.
-- `node start-build.js` bundles dist/start/ into `dist/start.js` (loaded when needed; works from file://);
+- `node tools/start-build.js` bundles public/start/ into `public/start.js` (loaded when needed; works from file://);
   bump.js runs it.
 - **The 3D preview on the canvas** (v0.106): coming back from the 3D editor puts the ASCII preview in the middle of
   the canvas (it used to stay where the first one went, so a shape built off to one side landed off the canvas). If
@@ -302,10 +302,10 @@ The Photoshop setup:
   canvas** (or Enter / double-click) puts it on a new layer above the active one, named after the piece, and picks
   the Move tool to place it. The pane closes on Add, ×, Esc, picking another tool, or drawing on the canvas (panning
   and zooming leave it open). Arrows step through the list.
-  - **The art is plain text** (the user, 2026-10-24): one `.txt` per piece in `dist/gallery/`, listed in
-    `dist/gallery/index.json` (file, name, artist, source subject + URL; its order is the gallery order). Served over
-    http the app reads those directly; from file:// (Chrome blocks reading them) it loads `dist/gallery.js`, the same
-    art bundled by `node gallery-build.js` (bump.js runs it too). The build adds new .txt files to the
+  - **The art is plain text** (the user, 2026-10-24): one `.txt` per piece in `public/gallery/`, listed in
+    `public/gallery/index.json` (file, name, artist, source subject + URL; its order is the gallery order). Served over
+    http the app reads those directly; from file:// (Chrome blocks reading them) it loads `public/gallery.js`, the same
+    art bundled by `node tools/gallery-build.js` (bump.js runs it too). The build adds new .txt files to the
     index (named from the file name) and drops entries whose file is gone. Nothing loads until the pane first opens.
   - **White space** (the user, 2026-10-24; v0.92): Clear | **Shape** (default) | Box, in the pane, shown live in the
     preview (only what gets placed is tinted; the art under see-through blanks shows). Shape makes the blanks inside
@@ -357,7 +357,7 @@ The Photoshop setup:
 ## v0: bare bones, UI in place (the user, 2026-10-23)
 
 A quick first app with the whole layout in place, so we can see how it feels before the converter and block mode.
-Plain HTML / CSS / JS in `dist/` (`index.html`, `style.css`, `app.js`), no build step: open `dist/index.html` in Chrome.
+Plain HTML / CSS / JS in `public/` (`index.html`, `style.css`, `app.js`), no build step: open `public/index.html` in Chrome.
 
 **Decided with the user (2026-10-23):**
 - **Typing is a tool.** The Type tool (or `T` / Enter) puts a text cursor on the grid; keys type, arrows move the
@@ -440,7 +440,7 @@ Polygon has its own style setting. Live preview; one undo step; respects the sel
 **Copy merged** (the user, v0.29): Edit menu or Ctrl Shift C copies the selection as you see it, from all visible layers
 (plain Copy takes only the active layer).
 
-**Update notice** (the user, v0.25): when hosted, the app checks `dist/version.json` (written by bump.js) and, if a newer
+**Update notice** (the user, v0.25): when hosted, the app checks `public/version.json` (written by bump.js) and, if a newer
 version has been uploaded, shows a small notice with Refresh (your work is autosaved first) and × (not now, for this
 session). Not from a local file.
 
@@ -484,7 +484,7 @@ Smart (ASCII), Box (now connected, sharp corners), Block. v0.71: the Advanced br
 **Font tool (F)** (the user, v0.80): text in FIGlet fonts (the TAAG format). Click to start a **text layer** and type; it
 renders live. A text layer keeps its text, font and spacing (Default / Full / Fit / Smush), so with the Font tool you
 click it to type more or change its font, and drag it (or arrow keys) to move it. It becomes plain art for good when
-another tool paints on it or it is merged down. Layers list shows a T tag. Fonts live in `dist/fonts.js` (32 fonts
+another tool paints on it or it is merged down. Layers list shows a T tag. Fonts live in `public/fonts.js` (32 fonts
 from the figlet.js package, MIT; the user's TAAG picks plus classics; Tmplr wasn't in the package; the Isometric fonts
 have letters only). The font list shows each font with a sample of your text. Saved with the project. v0.81: letters a font lacks show as the plain character, mid-height. v0.82: **White space** per text layer, worked out at runtime (fonts only know characters and blanks): Clear; **Inside** (blanks the letters close in are solid: flooded from outside the text, the cells it can't reach); **Block** (each row solid from its first to its last character: the text on a solid plate). v0.83: **Letters ±** (extra columns between letters after Spacing; below 0 they overlap) and **Lines ±** (extra rows between lines; below 0 they tuck in, the lower line on top), per text layer. v0.84 (the user: a stray selection broke a text layer while moving it): **Protect text layers** (Layers pane checkbox, on by default, to try it locked down): painting tools, Delete, Cut, Flip, Fill and Extrude leave a text layer alone (with a note); the Move tool (or arrows) moves it whole, ignoring any selection; drops / pastes land on a new layer above. **Layer › Rasterize text layer** (also in the Font tool bar) or Merge down makes it plain art on purpose. Off = the old way (any edit quietly makes it plain art).
 

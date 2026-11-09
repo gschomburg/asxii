@@ -4,3 +4,5 @@ saves/
 reference/ascii-art-de/
 # deleted things land here first, with a timestamp in the name (web.md)
 _trash/
+# build output only (web.md); asXii has no build step, so nothing should land here
+dist/

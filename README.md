@@ -11,11 +11,11 @@ shares no game code. It lived in the [neon-1](https://github.com/gschomburg/neon
 
 ## How to run
 
-Open `dist/index.html` in Chrome. No setup, no server: it works straight from disk (file://).
+Open `public/index.html` in Chrome. No setup, no server: it works straight from disk (file://).
 
 - Your work autosaves in the browser as you go. That's a convenience, not the real copy: save to a file.
-- `dist/index.html?fresh` starts clean (the welcome art) without touching the autosave.
-- `dist/index.html?neon=1` is the link to NeoN+1's editor (its ART tab opens asXii this way: `dist/neon-link.js`).
+- `public/index.html?fresh` starts clean (the welcome art) without touching the autosave.
+- `public/index.html?neon=1` is the link to NeoN+1's editor (its ART tab opens asXii this way: `public/neon-link.js`).
 - The theme follows your system (Light or Blue) until you pick one in the top bar.
 
 ### Saving
@@ -35,11 +35,11 @@ Open `dist/index.html` in Chrome. No setup, no server: it works straight from di
 Shown in the header (`v0.149`). Every batch of changes ticks it +0.01:
 
 ```
-node bump.js minor "Shape tool"
+node tools/bump.js minor "Shape tool"
 ```
 
-That changes `VERSION` in `dist/app.js`, the header, the `?v=` tags that make a normal reload pick up new files, and
-`dist/version.json`. The note is optional; it shows with the update notice. `node bump.js --help` lists
+That changes `VERSION` in `public/app.js`, the header, the `?v=` tags that make a normal reload pick up new files, and
+`public/version.json`. The note is optional; it shows with the update notice. `node tools/bump.js --help` lists
 the options.
 
 **Update notice:** a hosted copy checks `version.json` a few seconds after it loads, when you come back to the tab,
@@ -48,9 +48,9 @@ It does nothing when opened as a local file.
 
 ## How to deploy
 
-1. Commit first, then bump: `node bump.js minor "what changed"`.
+1. Commit first, then bump: `node tools/bump.js minor "what changed"`.
 2. Commit the bump.
-3. Upload the contents of `dist/` to the folder it's hosted in, by SFTP. Include `version.json`: hosted copies check
+3. Upload the contents of `public/` to the folder it's hosted in, by SFTP. Include `version.json`: hosted copies check
    it to offer the update.
 
 ## Project layout
@@ -67,10 +67,11 @@ asxii/
 │   ├── TODO.md           the open-work list
 │   ├── notes/            decisions and how-tos, one topic per file
 │   └── meat_notes.md     Greg's raw notes inbox
-├── bump.js               change the version everywhere
-├── gallery-build.js      keeps dist/gallery/index.json in step with the .txt files, and makes dist/gallery.js
-├── start-build.js        bundles dist/start/ into dist/start.js
-├── dist/                 the app: the only folder that ships
+├── tools/
+│   ├── bump.js           change the version everywhere
+│   ├── gallery-build.js  keeps public/gallery/index.json in step with the .txt files, and makes public/gallery.js
+│   └── start-build.js    bundles public/start/ into public/start.js
+├── public/               the app and web root: the only folder that ships
 │   ├── index.html        the page: menus, panels, dialogs
 │   ├── style.css         the four themes and all the styles
 │   ├── app.js            the editor
@@ -78,9 +79,9 @@ asxii/
 │   ├── fonts.js          FIGlet fonts for the Font tool (generated)
 │   ├── neon-link.js      the link to NeoN+1's editor (only with ?neon=1)
 │   ├── gallery/          the built-in art, one .txt per piece, listed in index.json
-│   ├── gallery.js        the gallery as a bundle, for file:// (made by gallery-build.js)
+│   ├── gallery.js        the gallery as a bundle, for file:// (made by tools/gallery-build.js)
 │   ├── start/            the welcome document and the 3D examples (asXii projects)
-│   ├── start.js          start/ as a bundle (made by start-build.js)
+│   ├── start.js          start/ as a bundle (made by tools/start-build.js)
 │   ├── layers.html       five mockups of a cleaned-up layers panel
 │   ├── version.json      the current version, for the update notice
 │   └── manifest.webmanifest, icon.svg, icon-*.png   the app icon
@@ -96,7 +97,7 @@ in its `readme.md`.
 ## Credits
 
 - Built by Greg Schomburg and Justin Bakse, with Claude (Anthropic) writing much of the code in Claude Code.
-- Gallery art: each piece's artist and source are in `dist/gallery/index.json` (the gallery shows the artist). Many pieces
+- Gallery art: each piece's artist and source are in `public/gallery/index.json` (the gallery shows the artist). Many pieces
   come from the [ascii-art.de](https://www.ascii-art.de/) collection.
 - FIGlet fonts: from the [figlet.js](https://github.com/patorjk/figlet.js) package (MIT). Each font keeps its
   author's notes in its header; the FIGlet format is by Frank Sheeran, Ian Chai and Glenn Chappell.

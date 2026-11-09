@@ -3,8 +3,8 @@
 The cursor should show what a click will do: which tool is active, plus any mode a key or the top bar has turned on.
 Section 1 and the fixes are built (v0.72); section 2 in v0.80. Tick an item (`[x]`) when it's built.
 
-**See them all:** open `dist/cursors.html`. Every cursor is numbered (C01...), drawn big on dark and light with its click point,
-and at real size; hover one to try it. The drawings live in `dist/cursors.js`, shared by the editor and that page.
+**See them all:** open `public/cursors.html`. Every cursor is numbered (C01...), drawn big on dark and light with its click point,
+and at real size; hover one to try it. The drawings live in `public/cursors.js`, shared by the editor and that page.
 
 ## How to build it
 

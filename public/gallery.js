@@ -1,4 +1,4 @@
-// asXii gallery bundle, made by gallery-build.js from dist/gallery/ (edit the .txt files and index.json there, not this).
+// asXii gallery bundle, made by tools/gallery-build.js from public/gallery/ (edit the .txt files and index.json there, not this).
 // Most of the art is from the ASCII Art Dictionary (https://www.ascii-art.de/ascii/); it belongs to its artists.
 window.ASXII_GALLERY = [
   {"file":"twisted-block.txt","name":"Twisted Block","by":"","subject":"","url":"","art":"       _____\n  ____/\\    \\\n /\\   \\:\\    \\\n/::\\   \\:\\  __\\__\n\\:::\\__/::\\/\\  \\ \\\n \\::/  \\:::::\\    \\\n  \\/____\\:::::\\    \\\n      /\\/::::::\\    \\\n     /::::::::::\\____\\\n    /:/\\::::::::/    /\n   /:/  \\::::::/    /\n  /:/ __/::::::\\    \\\n  \\:\\/\\/:/\\::/\\:\\ /  \\\n   \\::::/  \\//_\\:\\____\\\n    \\/\\/__/_/   \\/____/"},

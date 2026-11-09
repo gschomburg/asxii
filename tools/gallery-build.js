@@ -1,16 +1,16 @@
-// Gallery: the art lives in dist/gallery/ as plain .txt files, one piece each, and dist/gallery/index.json lists them
-// (file, name, artist, source). This script keeps the two in step and makes dist/gallery.js, the bundle the app
+// Gallery: the art lives in public/gallery/ as plain .txt files, one piece each, and public/gallery/index.json lists them
+// (file, name, artist, source). This script keeps the two in step and makes public/gallery.js, the bundle the app
 // uses when it is opened from file:// (Chrome won't let a file:// page read the .txt files; served over http it does).
-//   node gallery-build.js
+//   node tools/gallery-build.js
 // - a new .txt in the folder is added to the end of index.json, named after its file (edit the name / artist there)
 // - an index.json entry whose file is gone is dropped
 // - the order in index.json is the order in the gallery
 // bump.js runs this too, so a version bump never ships a stale bundle.
 'use strict';
-if (['-h', '--help'].includes(process.argv[2])) { console.log("usage: node gallery-build.js   (syncs dist/gallery/index.json and makes the dist/gallery.js bundle)"); process.exit(0); }
+if (['-h', '--help'].includes(process.argv[2])) { console.log("usage: node tools/gallery-build.js   (syncs public/gallery/index.json and makes the public/gallery.js bundle)"); process.exit(0); }
 const fs = require('fs'), path = require('path');
 function buildGallery(quiet) {
-  const dist = path.join(__dirname, 'dist'), dir = path.join(dist, 'gallery'), idxPath = path.join(dir, 'index.json');
+  const web = path.join(__dirname, '..', 'public'), dir = path.join(web, 'gallery'), idxPath = path.join(dir, 'index.json');
   const files = fs.readdirSync(dir).filter(f => f.toLowerCase().endsWith('.txt'));
   let index = [];
   try { index = JSON.parse(fs.readFileSync(idxPath, 'utf8')); } catch (e) { if (fs.existsSync(idxPath)) throw new Error('gallery/index.json: ' + e.message); }
@@ -20,8 +20,8 @@ function buildGallery(quiet) {
   for (const f of added) index.push({ file: f, name: f.replace(/\.txt$/i, '').replace(/[-_]+/g, ' ').replace(/(^|\s)\S/g, s => s.toUpperCase()), by: '', subject: '', url: '' });
   fs.writeFileSync(idxPath, '[\n' + index.map(e => '  ' + JSON.stringify(e)).join(',\n') + '\n]\n');
   const items = index.map(e => ({ ...e, art: tidyArt(fs.readFileSync(path.join(dir, e.file), 'utf8')) }));
-  fs.writeFileSync(path.join(dist, 'gallery.js'),
-    '// asXii gallery bundle, made by gallery-build.js from dist/gallery/ (edit the .txt files and index.json there, not this).\n' +
+  fs.writeFileSync(path.join(web, 'gallery.js'),
+    '// asXii gallery bundle, made by tools/gallery-build.js from public/gallery/ (edit the .txt files and index.json there, not this).\n' +
     '// Most of the art is from the ASCII Art Dictionary (https://www.ascii-art.de/ascii/); it belongs to its artists.\n' +
     'window.ASXII_GALLERY = [\n' + items.map(o => '  ' + JSON.stringify(o)).join(',\n') + '\n];\n');
   if (!quiet || added.length || gone.length) console.log(`gallery: ${items.length} pieces` + (added.length ? `, added ${added.join(', ')}` : '') + (gone.length ? `, dropped ${gone.join(', ')}` : ''));

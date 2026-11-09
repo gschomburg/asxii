@@ -11,7 +11,7 @@ const unK = k => { const i = k.indexOf(','); return [+k.slice(0, i), +k.slice(i 
 const chars = s => Array.from(s);           // split by code point, so Unicode characters stay whole
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-const VERSION = '0.149';   // change with: node bump.js minor
+const VERSION = '0.149';   // change with: node tools/bump.js minor
 const BASE_FONT_PX = 16;
 const LINE_RATIO = 1.25;                     // cell height / font size
 const ZOOMS = [0.25, 0.33, 0.5, 0.67, 0.8, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6];
@@ -524,7 +524,7 @@ function setFigFont(name, layout, ws = S.figfont.ws || 'clear') {
 
 // ---------- gallery (File › Gallery…): built-in art, plain .txt files in gallery/ ----------
 // Served over http, the pieces load from gallery/index.json and gallery/*.txt; from file:// (where Chrome won't let
-// the page read them) they come from gallery.js, the same art bundled by gallery-build.js. Either way
+// the page read them) they come from gallery.js, the same art bundled by tools/gallery-build.js. Either way
 // nothing loads until the pane is first opened.
 // A pane on the side lists the pieces. Clicking one previews it over the middle of the view, on a tinted plate;
 // Add puts it on a new layer above the active one, ready for the Move tool. The pane closes on Add, ×, Esc, or using a tool.
@@ -677,7 +677,7 @@ function initGallery() {
   $('#galList').addEventListener('dblclick', e => { const it = e.target.closest('.gal-item'); if (it) { galPreview(+it.dataset.gi); galAdd(); } });
 }
 
-// ---------- start content: the welcome document and the 3D examples (dist/start/, bundled into start.js) ----------
+// ---------- start content: the welcome document and the 3D examples (public/start/, bundled into start.js) ----------
 let startLoading = null;
 function loadStart() {
   if (window.ASXII_START) return Promise.resolve(window.ASXII_START);
@@ -2634,7 +2634,7 @@ setInterval(() => { if (S.tool === 'type' && S.cursor) { S.blinkOn = !S.blinkOn;
 
 // ---------- cursors ----------
 // Our own cursors (drawn in cursors.js, like the toolbox icons): a tool glyph plus a badge for the mode.
-// See docs/CURSORS.md for the full list, and dist/cursors.html for all of them side by side.
+// See docs/CURSORS.md for the full list, and public/cursors.html for all of them side by side.
 const curImage = (glyph, badge, dim, fallback) => window.ASXII_CURSORS.css(glyph, badge, dim, fallback);
 // Modifier keys, kept current from every key and pointer event, so the cursor can change the moment one is pressed
 S.mods = { shift: false, alt: false, cmd: false };
@@ -5620,7 +5620,7 @@ function setFont(f) {
 }
 
 // ---------- update check: when hosted, offer a refresh if a newer version has been uploaded ----------
-// dist/version.json is written by bump.js. Checked a few seconds after load, when you come back to the tab,
+// public/version.json is written by tools/bump.js. Checked a few seconds after load, when you come back to the tab,
 // and every 10 minutes. Not from a local file (the browser blocks it there), which is fine.
 const verNum = v => { const [a, b] = String(v).split('.').map(n => parseInt(n, 10) || 0); return a * 10000 + b; };
 let lastUpdateCheck = 0;
