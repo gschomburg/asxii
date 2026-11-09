@@ -1,0 +1,6 @@
+# your own projects: kept on disk, never committed
+saves/
+# the ascii-art.de catalog: a big (~10MB) reference copy of other people's art, kept local only (Greg, 2026-10-23)
+reference/ascii-art-de/
+# deleted things land here first, with a timestamp in the name (web.md)
+_trash/
